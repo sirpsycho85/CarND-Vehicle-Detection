@@ -20,7 +20,7 @@ The goals / steps of this project are the following:
 [image4]: ./output_images/single_frame.png
 [image5]: ./output_images/heatmap.png
 [image6]: ./output_images/heatmap_thresholded.png
-[image6]: ./output_images/draw_image.png
+[image7]: ./output_images/draw_image.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
