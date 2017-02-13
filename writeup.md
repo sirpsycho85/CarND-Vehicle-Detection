@@ -16,10 +16,10 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 [image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG.png
-[image3]: ./examples/windows.png
-[image4]: ./examples/single_frame.png
-[image5]: ./examples/heatmap.png
+[image2]: ./output_images/HOG.png
+[image3]: ./output_images/windows.png
+[image4]: ./output_images/single_frame.png
+[image5]: ./output_images/heatmap.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
