@@ -19,6 +19,8 @@ The goals / steps of this project are the following:
 [image3]: ./output_images/windows.png
 [image4]: ./output_images/single_frame.png
 [image5]: ./output_images/heatmap.png
+[image6]: ./output_images/heatmap_thresholded.png
+[image6]: ./output_images/draw_image.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -130,10 +132,17 @@ Binary heatmap approach: Initially, I used non-binary heatmaps, which give great
 
 Another approach I tried early, and would want to experiment more with is treating the different window sizes separately. I think I might be able to get more tight bounding boxes if I don't consider overlaps of windows of different sizes.
 
-Here's an example result showing the binary heatmap for a frame:
+Here's an example result showing the binary heatmaps for several frames...as they are binary, they are pretty boring. Sorry about that, but it works pretty well!:
 
 ![alt text][image5]
 
+The resulting heatmap after thresholding is then shown here:
+
+![alt text][image6]
+
+The resulting of the pipeline is then:
+
+![alt text][image7]
 
 ---
 
