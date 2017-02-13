@@ -16,13 +16,10 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 [image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
+[image2]: ./examples/HOG.png
+[image3]: ./examples/windows.png
+[image4]: ./examples/single_frame.png
+[image5]: ./examples/heatmap.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -40,7 +37,7 @@ You're reading it! The Jupyter notebook contains the code for this project.
 
 The function `get_hog_features()` extracts HOG features from an image. This function is called from the wrapper functions `extract_features()`, used for training on a number of images, and `single_img_features()`, used in the detection pipeline to extract features from a single frame of the video.
 
-I started by reading in all the `vehicle` and `non-vehicle` images using glob.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
+I started by reading in all the `vehicle` and `non-vehicle` images using `glob`.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 ![alt text][image1]
 
@@ -52,7 +49,7 @@ I tried a few HOG parameters and reviewed the notes and Q+A from Udacity.
 
 That said, the accuracy did not change by a great deal over the course of my experimentation. Ultimately, the proof was in the superior performance on the video once I switched to YCrCb and used all channels for my HOG features.
 
-Here is an example of the the output of extracting HOG parameters with my final configuration.
+Here is an example of the the output of extracting HOG parameters on the Y channel for sample images:
 
 ![alt text][image2]
 
@@ -83,9 +80,11 @@ The sizes of windows I chose were between the smallest size I would effectively 
 
 Note that in my pipeline, for each window size, I only searched for one "row" of windows. This is because for a given car, as it gets further away, the top of the car stays at a consistent height in the image, although the bottom of the car keeps changing. This gave me some savings from a performance standpoint, because it reduces the number of windows. I rely on using more window sizes to capture closer cars. It worked pretty well for me, thought I would want to spend some time in the future considering the potential cons of using this approach (for example, tall cars). This is captured in the code Pipeline.process_frame().
 
-I spent the most time on this project thinking of different approaches to windowing, as well as handling overlaps and false positives. In a section below I talk more about this.
+I spent the most time on this project thinking of different approaches to windowing, as well as handling overlaps and false positives, trying this out on small test videos that were problematic. In a section below I talk more about this.
 
 The function `search_windows()` takes the list of windows, extracts features, and makes a prediction based on the trained classifier. It returns the list of windows classified as containing a car.
+
+Here is an example of windows I would look at:
 
 ![alt text][image3]
 
@@ -93,7 +92,7 @@ The function `search_windows()` takes the list of windows, extracts features, an
 
 Ultimately I searched on the windows (72,72),(96,96),(128,128),(160,160),(196,196), using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result. Performance was sufficient for me, although in the future I might try the approach of extracting features once per image, and potentially downsampling the image.
 
-Here are some example images:
+Here is an example of the pipeline, with a low threshold (see below) such that some bounding boxes are visible:
 
 ![alt text][image4]
 ---
@@ -132,18 +131,9 @@ Binary heatmap approach: Initially, I used non-binary heatmaps, which give great
 
 Another approach I tried early, and would want to experiment more with is treating the different window sizes separately. I think I might be able to get more tight bounding boxes if I don't consider overlaps of windows of different sizes.
 
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
-
-### Here are six frames and their corresponding heatmaps:
+Here's an example result showing the binary heatmap for a frame:
 
 ![alt text][image5]
-
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
-
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
-
 
 
 ---
